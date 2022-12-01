@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 
 function App() {
-  const categories= ["Medias", "Caramelos", "Vitel Tone"]
+  const categories= ["Medias de colores", "Aspiradora robot", "Sub de GitHub Copilot", "Standing desk"]
   const listCategories = categories.map((item) => <li>{item}</li>);
 
 
