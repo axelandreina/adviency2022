@@ -3,7 +3,7 @@ function App() {
     {
       nombre: "Medias de colores",
       image:"../src/assets/img/3.png",
-      background: "bg-[#1ef9b3]"
+      background: "bg-[#c9e062]"
     },
     {
       nombre: "Aspiradora robot",
@@ -18,7 +18,7 @@ function App() {
     {
       nombre: "Standing desk",
       image: "../src/assets/img/4.png",
-      background: "bg-[#f9d2f0]"
+      background: "bg-[#c3acf1]"
     },
   ]
 
