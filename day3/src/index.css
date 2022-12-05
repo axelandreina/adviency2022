@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 body {
-  background: #000;
   font-family: 'Raleway', sans-serif;
+  background-color: #181747;
+  box-sizing: border-box;
+  background-image: url('../src/assets/img/christmas-tree.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom right;
 }

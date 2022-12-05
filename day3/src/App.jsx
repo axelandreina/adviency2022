@@ -1,53 +1,36 @@
 import { useState, useEffect } from "react";
-import { Card } from '../src/components/Card';
+import { v4 } from "uuid";
 
-const listaDeRegalos = [
-  {
-    id: 1,
-    nombre: "Medias de colores",
-    img: "./assets/img/1.png",
-    background: "bg-[#]"
-  },
-  {
-    id: 2,
-    nombre: "Libros",
-    img: "./assets/img/1.png",
-    background: "bg-[#]"
-  },
-  {
-    id: 3,
-    nombre: "Suscripcion de Copilot",
-    img: "./assets/img/1.png",
-    background: "bg-[#]"
-  },
-  {
-    id: 4,
-    nombre: "Aspiradora robot",
-    img: "./assets/img/1.png",
-    background: "bg-[#]"
-  },
-  {
-    id: 5,
-    nombre: "Medias de colores",
-    img: "./assets/img/1.png",
-    background: "bg-[#]"
-  },
-  {
-    id: 6,
-    nombre: "Medias de colores",
-    img: "./assets/img/1.png",
-    background: "bg-[#]"
-  },
-]
 
 function App() {
   const [cards, setCards] = useState([]);
   const [cardText, setCardText] = useState("");
+  const [cardColor, setCardColor] = useState("");
+  const [cardImage, setCardImage] = useState([
+    {
+      src: "../src/assets/img/3.png",
+    },
+    {
+      src: "../src/assets/img/2.png",
+    },
+    {
+      src: "../src/assets/img/1.png",
+    },
+    {
+      src: "../src/assets/img/4.png",
+    },
+  ]);
   
   const handleSubmit = e => {
     e.preventDefault();
-    setCards([...cards, cardText]);
-    setCardText("");
+    const trimmedText = cardText.trim();
+    if (trimmedText !== "") {
+      setCards([...cards, { id: v4(), text: trimmedText, color: cardColor, img: cardImage}]);
+      setCardText("");
+      setCardColor("")
+      setCardImage("")
+    }
+    
   };
 
   useEffect(() => {
@@ -60,34 +43,49 @@ function App() {
     if (cards.length > 0) {
       localStorage.setItem("cards", JSON.stringify(cards));
     }
-    
-    // const data = JSON.parse(localStorage.getItem("cards"));
-    
-    console.log(cards);
   }, [cards])
 
+  // const addCard = card => {
+  //   localStorage.setItem(card.id, JSON.stringify(card));
+  //   setCards([...cards, card]);
+  // };
+
+  const removeCard = id => {
+    localStorage.removeItem(id);
+    setCards(cards.filter(card => card.id !== id));
+  };
+
+
   return (
-    <>
-      <h1 className="text-3xl text-white font-bold">Regalos para Axi</h1>
-      {/* {listaDeRegalos.map(regalo => {
-        return (
-          <div key={regalo.id}>
-            <Card nombre={regalo.nombre} />
-          </div>
-        
-        )
-      })} */}
-      {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add new gift</button>   */}
+    <div className="flex flex-col  h-screen justify-between">
+      <h1 className="text-[#f9d2f0] text-5xl font-bold p-10 text-center">Regalos para Axi</h1>
+      
       <form onSubmit={handleSubmit}>
-        <input type="text" value={cardText} onChange={e => setCardText(e.target.value)} />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Add card</button>
+        <input type="text" value={cardText} onChange={e => setCardText(e.target.value)} className="py-2 px-4 rounded"/>
+        <select className="py-2 px-4 rounded mx-2" value={cardColor} onChange={e => setCardColor(e.target.value)}>
+          <option value="">Color</option>
+          <option value="[#c9e062]">Green</option>
+          <option value="[#f4095f]">Pink</option>
+          <option value="[#00000]">Light pink</option>
+          <option value="[#c3acf1]">Purple</option>
+        </select>
+        <button className="bg-[#f4095f] hover:bg-[#f9d2f0] hover:text-[#f4095f] text-white font-bold py-2 px-4 rounded" type="submit">Agregar regalo</button>
       </form>
-      <div>
+      <div className="grid gap-4 grid-cols-2 grid-rows-2 justify-center">
         {cards.map(card => (
-          <div className="text-white" key={card}>{card}</div>
+          <div key={card.id} className={`mb-4 rounded-xl cursor-pointer font-bold p-4 flex flex-wrap justify-center content-between bg-${card.color}`}>
+          
+              <img src="../src/assets/img/2.png" alt="Image" className="w-[10%] mr-2"/>
+            
+            <p className="text-white" key={card.text}>{card.text}</p>
+            <button onClick={() => removeCard(card.id)}>x</button>
+          </div>
         ))}
       </div>
-    </>
+      <p className="text-white text-sm p-4 italic">
+        Illustration by <a href="https://icons8.com/illustrations/author/zD2oqC8lLBBA">Icons 8</a> from <a href="https://icons8.com/illustrations">Ouch!</a>
+      </p>
+    </div>
   )
 }
 
