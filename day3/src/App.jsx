@@ -55,8 +55,14 @@ function App() {
     setCards(cards.filter(card => card.id !== id));
   };
 
-
-  return (
+   const removeAllCards = cards => {
+     var cards = JSON.parse(localStorage.getItem("cards"));
+     cards.splice(0, cards.length);
+     localStorage.setItem("cards", JSON.stringify(cards));
+     setCards(cards)
+   }
+  
+   return (
     <div className="flex flex-col  h-screen justify-between">
       <h1 className="text-[#f9d2f0] text-5xl font-bold p-10 text-center">Regalos para Axi</h1>
       
@@ -81,6 +87,7 @@ function App() {
             <button onClick={() => removeCard(card.id)}>x</button>
           </div>
         ))}
+         <button className="bg-[#f4095f] hover:bg-[#f9d2f0] hover:text-[#f4095f] text-white font-bold py-2 px-4 rounded" onClick={() => removeAllCards()} type="submit">Eliminar todos los regalos</button>
       </div>
       <p className="text-white text-sm p-4 italic">
         Illustration by <a href="https://icons8.com/illustrations/author/zD2oqC8lLBBA">Icons 8</a> from <a href="https://icons8.com/illustrations">Ouch!</a>
